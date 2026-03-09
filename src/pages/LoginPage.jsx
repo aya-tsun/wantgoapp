@@ -11,9 +11,21 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const validatePassword = (pw) => {
+    if (pw.length < 8) return 'パスワードは8文字以上にしてください'
+    if (!/[a-z]/.test(pw)) return 'パスワードに英小文字を含めてください'
+    if (!/[A-Z]/.test(pw)) return 'パスワードに英大文字を含めてください'
+    if (!/[0-9]/.test(pw)) return 'パスワードに数字を含めてください'
+    return null
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    if (isSignUp) {
+      const pwError = validatePassword(password)
+      if (pwError) { setError(pwError); return }
+    }
     setLoading(true)
     try {
       if (isSignUp) {
@@ -63,9 +75,9 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              minLength={6}
+              minLength={8}
               className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
-              placeholder="6文字以上"
+              placeholder="8文字以上・英大小文字・数字を含む"
             />
           </div>
 

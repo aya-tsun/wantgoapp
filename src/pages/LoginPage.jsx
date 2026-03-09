@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function LoginPage() {
   const { signIn, signUp } = useAuth()
+  const navigate = useNavigate()
   const [isSignUp, setIsSignUp] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -19,6 +21,7 @@ export default function LoginPage() {
       } else {
         await signIn(email, password)
       }
+      navigate('/')
     } catch (err) {
       setError(err.message || 'エラーが発生しました')
     } finally {

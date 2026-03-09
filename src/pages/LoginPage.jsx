@@ -41,63 +41,61 @@ export default function LoginPage() {
     }
   }
 
+  const inputClass = "w-full bg-transparent border-b border-zinc-300 px-0 py-2.5 text-sm text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 transition-colors"
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-sm">
-        <div className="text-center mb-6">
-          <div className="text-5xl mb-4">📋</div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">WantDo</h1>
-          <p className="text-gray-500 text-sm">
-            やりたいことを記録して、<br />計画を実現しよう
+    <div className="min-h-screen bg-zinc-50 flex items-center justify-center p-6">
+      <div className="w-full max-w-xs">
+        <div className="mb-12">
+          <h1 className="text-xs font-bold tracking-[0.3em] text-zinc-900 uppercase mb-3">WantDo</h1>
+          <p className="text-zinc-400 text-sm leading-relaxed">
+            やりたいことを、かたちにしよう
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              メールアドレス
-            </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
-              placeholder="you@example.com"
+              className={inputClass}
+              placeholder="メールアドレス"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              パスワード
-            </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={8}
-              className="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent"
-              placeholder="8文字以上・英大小文字・数字を含む"
+              className={inputClass}
+              placeholder={isSignUp ? 'パスワード（英大小文字・数字を含む8文字以上）' : 'パスワード'}
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-xs leading-relaxed">{error}</p>
+          )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-indigo-600 text-white font-medium py-3 rounded-xl hover:bg-indigo-700 transition-colors disabled:opacity-50"
-          >
-            {loading ? '処理中...' : isSignUp ? 'アカウント作成' : 'ログイン'}
-          </button>
+          <div className="pt-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-zinc-900 text-white text-sm py-3 tracking-wide hover:bg-zinc-700 transition-colors disabled:opacity-40"
+            >
+              {loading ? '処理中...' : isSignUp ? 'アカウント作成' : 'ログイン'}
+            </button>
+          </div>
         </form>
 
-        <p className="text-center text-sm text-gray-500 mt-4">
-          {isSignUp ? 'すでにアカウントをお持ちの方は' : 'アカウントをお持ちでない方は'}
-          {' '}
+        <p className="text-xs text-zinc-400 mt-8 text-center">
+          {isSignUp ? 'すでにアカウントをお持ちの方は ' : 'アカウントをお持ちでない方は '}
           <button
             onClick={() => { setIsSignUp(!isSignUp); setError('') }}
-            className="text-indigo-600 font-medium hover:underline"
+            className="text-zinc-900 underline underline-offset-4 hover:text-zinc-600 transition-colors"
           >
             {isSignUp ? 'ログイン' : '新規登録'}
           </button>

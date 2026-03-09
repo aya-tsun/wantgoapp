@@ -79,45 +79,45 @@ export default function ItemModal({ item, onClose, onSaved }) {
     }
   }
 
+  const inputClass = "w-full border border-zinc-200 rounded px-3 py-2 text-sm text-zinc-900 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900 bg-white transition-colors"
+  const labelClass = "block text-xs text-zinc-500 mb-1 tracking-wide"
+
   return (
     <div
-      className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+      className="fixed inset-0 bg-black/40 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
-      <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg max-h-[92vh] overflow-y-auto">
+      <div className="bg-white w-full sm:max-w-lg max-h-[92vh] overflow-y-auto sm:rounded">
         {/* Modal Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-100 px-5 py-4 flex items-center justify-between rounded-t-2xl">
-          <h2 className="font-bold text-gray-800">
+        <div className="sticky top-0 bg-white border-b border-zinc-100 px-5 py-4 flex items-center justify-between">
+          <h2 className="text-sm font-semibold text-zinc-900 tracking-wide">
             {isEdit ? 'アイテムを編集' : 'アイテムを追加'}
           </h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-xl leading-none">✕</button>
+          <button
+            onClick={onClose}
+            className="text-zinc-400 hover:text-zinc-700 transition-colors w-6 h-6 flex items-center justify-center"
+          >
+            <svg viewBox="0 0 16 16" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+              <path d="M3 3l10 10M13 3L3 13"/>
+            </svg>
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-5 space-y-4">
-          {/* Title */}
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">
-              タイトル <span className="text-red-400">*</span>
-            </label>
+            <label className={labelClass}>タイトル <span className="text-red-400">*</span></label>
             <input
               type="text"
               value={form.title}
               onChange={set('title')}
               placeholder="例：丸の内のあのフレンチ"
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              className={inputClass}
             />
           </div>
 
-          {/* Category */}
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">
-              カテゴリ <span className="text-red-400">*</span>
-            </label>
-            <select
-              value={form.category}
-              onChange={set('category')}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-white"
-            >
+            <label className={labelClass}>カテゴリ <span className="text-red-400">*</span></label>
+            <select value={form.category} onChange={set('category')} className={inputClass}>
               <option value="">選択してください</option>
               {CATEGORIES.map((c) => (
                 <option key={c.value} value={c.value}>{c.label}</option>
@@ -125,51 +125,39 @@ export default function ItemModal({ item, onClose, onSaved }) {
             </select>
           </div>
 
-          {/* Status */}
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">ステータス <span className="text-red-400">*</span></label>
-            <select
-              value={form.status}
-              onChange={set('status')}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-white"
-            >
+            <label className={labelClass}>ステータス</label>
+            <select value={form.status} onChange={set('status')} className={inputClass}>
               {STATUSES.map((s) => (
                 <option key={s.value} value={s.value}>{s.label}</option>
               ))}
             </select>
           </div>
 
-          {/* Invited person */}
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">誰を誘うか／誘った人</label>
+            <label className={labelClass}>誰を誘うか／誘った人</label>
             <input
               type="text"
               value={form.invited_person}
               onChange={set('invited_person')}
               placeholder="例：Aさん、未定"
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              className={inputClass}
             />
           </div>
 
-          {/* Deadline */}
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">行く時期・期限</label>
+            <label className={labelClass}>行く時期・期限</label>
             <input
               type="date"
               value={form.deadline}
               onChange={set('deadline')}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              className={inputClass}
             />
           </div>
 
-          {/* Ticket status */}
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">予約・チケット状況</label>
-            <select
-              value={form.ticket_status}
-              onChange={set('ticket_status')}
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 bg-white"
-            >
+            <label className={labelClass}>予約・チケット状況</label>
+            <select value={form.ticket_status} onChange={set('ticket_status')} className={inputClass}>
               <option value="">—</option>
               {TICKET_STATUSES.map((t) => (
                 <option key={t.value} value={t.value}>{t.label}</option>
@@ -177,40 +165,37 @@ export default function ItemModal({ item, onClose, onSaved }) {
             </select>
           </div>
 
-          {/* URL */}
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">URL</label>
+            <label className={labelClass}>URL</label>
             <input
               type="url"
               value={form.url}
               onChange={set('url')}
               placeholder="https://..."
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              className={inputClass}
             />
           </div>
 
-          {/* Memo */}
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">メモ</label>
+            <label className={labelClass}>メモ</label>
             <textarea
               value={form.memo}
               onChange={set('memo')}
               rows={3}
               placeholder="自由記述..."
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 resize-none"
+              className={inputClass + ' resize-none'}
             />
           </div>
 
           {error && <p className="text-red-500 text-xs">{error}</p>}
 
-          {/* Actions */}
-          <div className="flex gap-3 pt-2">
+          <div className="flex gap-3 pt-2 items-center">
             {isEdit && (
               <button
                 type="button"
                 onClick={handleDelete}
                 disabled={deleting}
-                className="text-sm text-red-500 hover:text-red-700 transition-colors disabled:opacity-50"
+                className="text-xs text-zinc-400 hover:text-red-500 transition-colors disabled:opacity-50"
               >
                 {deleting ? '削除中...' : '削除'}
               </button>
@@ -219,14 +204,14 @@ export default function ItemModal({ item, onClose, onSaved }) {
             <button
               type="button"
               onClick={onClose}
-              className="text-sm px-4 py-2 border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors"
+              className="text-xs px-4 py-2 border border-zinc-200 rounded text-zinc-600 hover:bg-zinc-50 transition-colors"
             >
               キャンセル
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="text-sm px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium disabled:opacity-50"
+              className="text-xs px-5 py-2 bg-zinc-900 text-white rounded hover:bg-zinc-700 transition-colors disabled:opacity-40"
             >
               {saving ? '保存中...' : '保存'}
             </button>

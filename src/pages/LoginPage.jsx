@@ -7,18 +7,15 @@ export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
-    setMessage('')
     setLoading(true)
     try {
       if (isSignUp) {
         await signUp(email, password)
-        setMessage('確認メールを送りました。メールをチェックしてください。')
       } else {
         await signIn(email, password)
       }
@@ -70,7 +67,6 @@ export default function LoginPage() {
           </div>
 
           {error && <p className="text-red-500 text-sm">{error}</p>}
-          {message && <p className="text-green-600 text-sm">{message}</p>}
 
           <button
             type="submit"
@@ -85,7 +81,7 @@ export default function LoginPage() {
           {isSignUp ? 'すでにアカウントをお持ちの方は' : 'アカウントをお持ちでない方は'}
           {' '}
           <button
-            onClick={() => { setIsSignUp(!isSignUp); setError(''); setMessage('') }}
+            onClick={() => { setIsSignUp(!isSignUp); setError('') }}
             className="text-indigo-600 font-medium hover:underline"
           >
             {isSignUp ? 'ログイン' : '新規登録'}

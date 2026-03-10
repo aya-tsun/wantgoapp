@@ -49,7 +49,7 @@ export default function LoginPage() {
         {/* Brand */}
         <div className="text-center mb-10">
           <h1 className="font-serif tracking-[0.4em] text-slate-900 text-2xl uppercase mb-3">
-            envietour
+            envitour
           </h1>
           <div className="flex items-center gap-3">
             <div className="flex-1 h-px bg-amber-400/50" />

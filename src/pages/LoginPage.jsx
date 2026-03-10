@@ -41,30 +41,36 @@ export default function LoginPage() {
     }
   }
 
-  const inputClass = "w-full bg-transparent border-b border-zinc-300 px-0 py-2.5 text-sm text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 transition-colors"
+  const inputClass = "w-full border border-stone-300 rounded-lg px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white transition-colors"
 
   return (
-    <div className="min-h-screen bg-zinc-50 flex items-center justify-center p-6">
-      <div className="w-full max-w-xs">
-        <div className="mb-12">
-          <h1 className="text-xs font-bold tracking-[0.3em] text-zinc-900 uppercase mb-3">WantDo</h1>
-          <p className="text-zinc-400 text-sm leading-relaxed">
-            やりたいことを、かたちにしよう
+    <div className="min-h-screen bg-stone-100 flex items-center justify-center p-6">
+      <div className="bg-white rounded-2xl shadow-sm border border-stone-200 w-full max-w-sm p-8">
+        <div className="mb-8">
+          <h1 className="text-xl font-bold text-stone-900 mb-1.5">WantDo</h1>
+          <p className="text-stone-500 text-sm">
+            やりたいことを記録して、<br />計画を実現しよう
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
+            <label className="block text-xs font-medium text-stone-600 mb-1.5">
+              メールアドレス
+            </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               className={inputClass}
-              placeholder="メールアドレス"
+              placeholder="you@example.com"
             />
           </div>
           <div>
+            <label className="block text-xs font-medium text-stone-600 mb-1.5">
+              パスワード
+            </label>
             <input
               type="password"
               value={password}
@@ -72,7 +78,7 @@ export default function LoginPage() {
               required
               minLength={8}
               className={inputClass}
-              placeholder={isSignUp ? 'パスワード（英大小文字・数字を含む8文字以上）' : 'パスワード'}
+              placeholder={isSignUp ? '英大小文字・数字を含む8文字以上' : 'パスワード'}
             />
           </div>
 
@@ -80,22 +86,22 @@ export default function LoginPage() {
             <p className="text-red-500 text-xs leading-relaxed">{error}</p>
           )}
 
-          <div className="pt-2">
+          <div className="pt-1">
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-zinc-900 text-white text-sm py-3 tracking-wide hover:bg-zinc-700 transition-colors disabled:opacity-40"
+              className="w-full bg-teal-600 text-white text-sm font-medium py-2.5 rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50"
             >
               {loading ? '処理中...' : isSignUp ? 'アカウント作成' : 'ログイン'}
             </button>
           </div>
         </form>
 
-        <p className="text-xs text-zinc-400 mt-8 text-center">
+        <p className="text-center text-xs text-stone-500 mt-6">
           {isSignUp ? 'すでにアカウントをお持ちの方は ' : 'アカウントをお持ちでない方は '}
           <button
             onClick={() => { setIsSignUp(!isSignUp); setError('') }}
-            className="text-zinc-900 underline underline-offset-4 hover:text-zinc-600 transition-colors"
+            className="text-teal-600 font-medium hover:underline"
           >
             {isSignUp ? 'ログイン' : '新規登録'}
           </button>

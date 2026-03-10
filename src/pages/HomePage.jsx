@@ -60,68 +60,70 @@ export default function HomePage() {
     fetchItems()
   }
 
-  const selectClass = "text-xs border border-zinc-200 rounded px-2.5 py-1.5 bg-white text-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-900 focus:border-zinc-900"
+  const selectClass = "text-sm border border-stone-200 rounded-lg px-3 py-1.5 bg-white text-stone-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-stone-50">
       <Header />
 
       <main className="max-w-4xl mx-auto px-4 py-6">
         {/* Toolbar */}
-        <div className="flex flex-wrap gap-2 items-center mb-6">
-          <select
-            value={filterCategory}
-            onChange={(e) => setFilterCategory(e.target.value)}
-            className={selectClass}
-          >
-            <option value="">すべてのカテゴリ</option>
-            {CATEGORIES.map((c) => (
-              <option key={c.value} value={c.value}>{c.label}</option>
-            ))}
-          </select>
+        <div className="bg-white rounded-xl border border-stone-200 p-4 mb-6">
+          <div className="flex flex-wrap gap-2.5 items-center">
+            <select
+              value={filterCategory}
+              onChange={(e) => setFilterCategory(e.target.value)}
+              className={selectClass}
+            >
+              <option value="">すべてのカテゴリ</option>
+              {CATEGORIES.map((c) => (
+                <option key={c.value} value={c.value}>{c.label}</option>
+              ))}
+            </select>
 
-          <select
-            value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value)}
-            className={selectClass}
-          >
-            <option value="">すべてのステータス</option>
-            {STATUSES.map((s) => (
-              <option key={s.value} value={s.value}>{s.label}</option>
-            ))}
-          </select>
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className={selectClass}
+            >
+              <option value="">すべてのステータス</option>
+              {STATUSES.map((s) => (
+                <option key={s.value} value={s.value}>{s.label}</option>
+              ))}
+            </select>
 
-          <button
-            onClick={() => setSortByDeadline((v) => !v)}
-            className={`text-xs px-2.5 py-1.5 rounded border transition-colors ${
-              sortByDeadline
-                ? 'bg-zinc-900 text-white border-zinc-900'
-                : 'bg-white text-zinc-600 border-zinc-200 hover:border-zinc-400'
-            }`}
-          >
-            期限順
-          </button>
+            <button
+              onClick={() => setSortByDeadline((v) => !v)}
+              className={`text-sm px-3 py-1.5 rounded-lg border transition-colors ${
+                sortByDeadline
+                  ? 'bg-teal-600 text-white border-teal-600'
+                  : 'bg-white text-stone-600 border-stone-200 hover:border-teal-400 hover:text-teal-600'
+              }`}
+            >
+              期限順
+            </button>
 
-          <div className="flex-1" />
+            <div className="flex-1" />
 
-          <button
-            onClick={handleAdd}
-            className="text-xs bg-zinc-900 text-white px-4 py-1.5 rounded hover:bg-zinc-700 transition-colors tracking-wide"
-          >
-            ＋ 追加
-          </button>
+            <button
+              onClick={handleAdd}
+              className="text-sm bg-teal-600 text-white px-4 py-1.5 rounded-lg hover:bg-teal-700 transition-colors font-medium"
+            >
+              ＋ 追加
+            </button>
+          </div>
         </div>
 
         {/* Cards */}
         {loading ? (
-          <div className="text-center text-zinc-400 py-20 text-xs tracking-widest">読み込み中</div>
+          <div className="text-center text-stone-400 py-20 text-sm">読み込み中...</div>
         ) : items.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-zinc-400 text-sm mb-1">まだアイテムがありません</p>
-            <p className="text-zinc-300 text-xs">「＋ 追加」からやりたいことを登録しよう</p>
+            <p className="text-stone-500 text-sm mb-1">まだアイテムがありません</p>
+            <p className="text-stone-400 text-xs">「＋ 追加」からやりたいことを登録しよう！</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {items.map((item) => (
               <ItemCard key={item.id} item={item} onEdit={handleEdit} />
             ))}

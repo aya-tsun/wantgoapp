@@ -41,22 +41,29 @@ export default function LoginPage() {
     }
   }
 
-  const inputClass = "w-full border border-stone-300 rounded-lg px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white transition-colors"
+  const inputClass = "w-full border-b border-amber-300 bg-transparent px-1 py-2 text-sm text-slate-900 placeholder-stone-400 focus:outline-none focus:border-slate-900 transition-colors"
 
   return (
-    <div className="min-h-screen bg-stone-100 flex items-center justify-center p-6">
-      <div className="bg-white rounded-2xl shadow-sm border border-stone-200 w-full max-w-sm p-8">
-        <div className="mb-8">
-          <h1 className="text-xl font-bold text-stone-900 mb-1.5">WantDo</h1>
-          <p className="text-stone-500 text-sm">
-            やりたいことを記録して、<br />計画を実現しよう
-          </p>
+    <div className="min-h-screen bg-amber-50 flex items-center justify-center p-6">
+      <div className="w-full max-w-xs">
+        {/* Brand */}
+        <div className="text-center mb-10">
+          <h1 className="font-serif tracking-[0.4em] text-slate-900 text-2xl uppercase mb-3">
+            Venueo
+          </h1>
+          <div className="flex items-center gap-3">
+            <div className="flex-1 h-px bg-amber-400/50" />
+            <p className="text-stone-500 text-xs tracking-wider">
+              {isSignUp ? 'アカウント作成' : 'ようこそ'}
+            </p>
+            <div className="flex-1 h-px bg-amber-400/50" />
+          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-xs font-medium text-stone-600 mb-1.5">
-              メールアドレス
+            <label className="block text-xs tracking-widest text-stone-500 uppercase mb-2">
+              Email
             </label>
             <input
               type="email"
@@ -68,8 +75,8 @@ export default function LoginPage() {
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-stone-600 mb-1.5">
-              パスワード
+            <label className="block text-xs tracking-widest text-stone-500 uppercase mb-2">
+              Password
             </label>
             <input
               type="password"
@@ -78,7 +85,7 @@ export default function LoginPage() {
               required
               minLength={8}
               className={inputClass}
-              placeholder={isSignUp ? '英大小文字・数字を含む8文字以上' : 'パスワード'}
+              placeholder={isSignUp ? '英大小文字・数字を含む8文字以上' : '••••••••'}
             />
           </div>
 
@@ -86,22 +93,22 @@ export default function LoginPage() {
             <p className="text-red-500 text-xs leading-relaxed">{error}</p>
           )}
 
-          <div className="pt-1">
+          <div className="pt-2">
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-teal-600 text-white text-sm font-medium py-2.5 rounded-lg hover:bg-teal-700 transition-colors disabled:opacity-50"
+              className="w-full bg-slate-900 text-amber-100 text-xs tracking-widest uppercase py-3 hover:bg-slate-800 transition-colors disabled:opacity-50"
             >
-              {loading ? '処理中...' : isSignUp ? 'アカウント作成' : 'ログイン'}
+              {loading ? '...' : isSignUp ? 'アカウント作成' : 'ログイン'}
             </button>
           </div>
         </form>
 
-        <p className="text-center text-xs text-stone-500 mt-6">
+        <p className="text-center text-xs text-stone-400 mt-8">
           {isSignUp ? 'すでにアカウントをお持ちの方は ' : 'アカウントをお持ちでない方は '}
           <button
             onClick={() => { setIsSignUp(!isSignUp); setError('') }}
-            className="text-teal-600 font-medium hover:underline"
+            className="text-slate-700 underline underline-offset-2 hover:text-amber-700 transition-colors"
           >
             {isSignUp ? 'ログイン' : '新規登録'}
           </button>

@@ -7,11 +7,11 @@ export const CATEGORIES = [
 
 export const STATUSES = [
   { value: '未着手', label: '未着手', color: 'bg-stone-100 text-stone-500' },
-  { value: '計画中', label: '計画中', color: 'bg-sky-100 text-sky-700' },
-  { value: '準備中', label: '準備中', color: 'bg-amber-100 text-amber-700' },
-  { value: '確定', label: '確定', color: 'bg-teal-100 text-teal-700' },
-  { value: '完了', label: '完了', color: 'bg-stone-700 text-white' },
-  { value: '見送り', label: '見送り', color: 'bg-stone-100 text-stone-400' },
+  { value: '計画中', label: '計画中', color: 'bg-slate-100 text-slate-600' },
+  { value: '準備中', label: '準備中', color: 'bg-amber-50 text-amber-700 border border-amber-200' },
+  { value: '確定', label: '確定', color: 'bg-emerald-50 text-emerald-700' },
+  { value: '完了', label: '完了', color: 'bg-slate-900 text-amber-200' },
+  { value: '見送り', label: '見送り', color: 'bg-stone-50 text-stone-400 border border-stone-200' },
 ]
 
 export const TICKET_STATUSES = [

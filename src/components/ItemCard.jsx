@@ -38,21 +38,21 @@ export default function ItemCard({ item, onEdit }) {
   return (
     <div
       onClick={() => onEdit(item)}
-      className="bg-white rounded-lg border border-stone-200 p-4 cursor-pointer hover:shadow-md hover:border-teal-300 transition-all"
+      className="bg-white border border-amber-200 p-4 cursor-pointer hover:shadow-md hover:border-amber-400 transition-all"
     >
-      <div className="flex items-start justify-between gap-2 mb-2">
-        <h3 className="font-semibold text-stone-900 text-sm leading-snug flex-1 line-clamp-2">
+      <div className="flex items-start justify-between gap-2 mb-3">
+        <h3 className="font-serif text-slate-900 text-sm leading-snug flex-1 line-clamp-2">
           {item.title}
         </h3>
         <StatusBadge status={item.status} />
       </div>
 
       <div className="flex flex-wrap gap-1.5 mb-3">
-        <span className="text-xs bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full font-medium">
+        <span className="text-xs bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5">
           {item.category}
         </span>
         {item.ticket_status && item.ticket_status !== '未対応' && (
-          <span className="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full font-medium">
+          <span className="text-xs bg-slate-50 text-slate-600 border border-slate-200 px-2 py-0.5">
             予約: {item.ticket_status}
           </span>
         )}
@@ -79,7 +79,7 @@ export default function ItemCard({ item, onEdit }) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="text-teal-600 hover:underline truncate"
+              className="text-amber-700 hover:underline truncate"
             >
               {item.url.replace(/^https?:\/\//, '').split('/')[0]}
             </a>

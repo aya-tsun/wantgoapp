@@ -79,23 +79,23 @@ export default function ItemModal({ item, onClose, onSaved }) {
     }
   }
 
-  const inputClass = "w-full border border-stone-200 rounded-lg px-3 py-2 text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 bg-white transition-colors"
-  const labelClass = "block text-xs font-medium text-stone-600 mb-1"
+  const inputClass = "w-full border-b border-amber-300 bg-transparent px-1 py-2 text-sm text-slate-900 placeholder-stone-400 focus:outline-none focus:border-slate-900 transition-colors"
+  const labelClass = "block text-xs tracking-widest text-stone-500 uppercase mb-2"
 
   return (
     <div
-      className="fixed inset-0 bg-black/40 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+      className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
-      <div className="bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-lg max-h-[92vh] overflow-y-auto">
+      <div className="bg-amber-50 w-full sm:max-w-lg max-h-[92vh] overflow-y-auto">
         {/* Modal Header */}
-        <div className="sticky top-0 bg-white border-b border-stone-100 px-5 py-4 flex items-center justify-between rounded-t-2xl">
-          <h2 className="font-bold text-stone-900 text-base">
-            {isEdit ? 'アイテムを編集' : 'アイテムを追加'}
+        <div className="sticky top-0 bg-amber-50 border-b border-amber-200 px-6 py-4 flex items-center justify-between">
+          <h2 className="font-serif text-slate-900 text-base tracking-wide">
+            {isEdit ? 'Edit' : 'Add Item'}
           </h2>
           <button
             onClick={onClose}
-            className="text-stone-400 hover:text-stone-600 transition-colors w-7 h-7 flex items-center justify-center rounded-full hover:bg-stone-100"
+            className="text-stone-400 hover:text-slate-900 transition-colors w-7 h-7 flex items-center justify-center"
           >
             <svg viewBox="0 0 16 16" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
               <path d="M3 3l10 10M13 3L3 13"/>
@@ -103,7 +103,7 @@ export default function ItemModal({ item, onClose, onSaved }) {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-5 space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
             <label className={labelClass}>タイトル <span className="text-red-400">*</span></label>
             <input
@@ -189,13 +189,13 @@ export default function ItemModal({ item, onClose, onSaved }) {
 
           {error && <p className="text-red-500 text-xs">{error}</p>}
 
-          <div className="flex gap-3 pt-2 items-center">
+          <div className="flex gap-4 pt-2 items-center border-t border-amber-200">
             {isEdit && (
               <button
                 type="button"
                 onClick={handleDelete}
                 disabled={deleting}
-                className="text-sm text-stone-400 hover:text-red-500 transition-colors disabled:opacity-50"
+                className="text-xs text-stone-400 hover:text-red-500 transition-colors disabled:opacity-50 mt-4"
               >
                 {deleting ? '削除中...' : '削除'}
               </button>
@@ -204,16 +204,16 @@ export default function ItemModal({ item, onClose, onSaved }) {
             <button
               type="button"
               onClick={onClose}
-              className="text-sm px-4 py-2 border border-stone-200 rounded-lg text-stone-600 hover:bg-stone-50 transition-colors"
+              className="text-xs tracking-wider px-4 py-2 border border-amber-300 text-slate-600 hover:border-slate-900 transition-colors mt-4"
             >
               キャンセル
             </button>
             <button
               type="submit"
               disabled={saving}
-              className="text-sm px-5 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium disabled:opacity-50"
+              className="text-xs tracking-widest uppercase px-5 py-2 bg-slate-900 text-amber-100 hover:bg-slate-800 transition-colors disabled:opacity-50 mt-4"
             >
-              {saving ? '保存中...' : '保存'}
+              {saving ? '...' : '保存'}
             </button>
           </div>
         </form>

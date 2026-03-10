@@ -60,15 +60,15 @@ export default function HomePage() {
     fetchItems()
   }
 
-  const selectClass = "text-sm border border-stone-200 rounded-lg px-3 py-1.5 bg-white text-stone-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+  const selectClass = "text-xs tracking-wider border border-amber-300 bg-amber-50 text-slate-700 px-3 py-1.5 focus:outline-none focus:border-slate-900 transition-colors"
 
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen bg-amber-50">
       <Header />
 
-      <main className="max-w-4xl mx-auto px-4 py-6">
+      <main className="max-w-4xl mx-auto px-4 py-8">
         {/* Toolbar */}
-        <div className="bg-white rounded-xl border border-stone-200 p-4 mb-6">
+        <div className="border border-amber-200 bg-white/60 p-4 mb-8">
           <div className="flex flex-wrap gap-2.5 items-center">
             <select
               value={filterCategory}
@@ -94,10 +94,10 @@ export default function HomePage() {
 
             <button
               onClick={() => setSortByDeadline((v) => !v)}
-              className={`text-sm px-3 py-1.5 rounded-lg border transition-colors ${
+              className={`text-xs tracking-wider px-3 py-1.5 border transition-colors ${
                 sortByDeadline
-                  ? 'bg-teal-600 text-white border-teal-600'
-                  : 'bg-white text-stone-600 border-stone-200 hover:border-teal-400 hover:text-teal-600'
+                  ? 'bg-slate-900 text-amber-200 border-slate-900'
+                  : 'bg-transparent text-slate-600 border-amber-300 hover:border-slate-900 hover:text-slate-900'
               }`}
             >
               期限順
@@ -107,7 +107,7 @@ export default function HomePage() {
 
             <button
               onClick={handleAdd}
-              className="text-sm bg-teal-600 text-white px-4 py-1.5 rounded-lg hover:bg-teal-700 transition-colors font-medium"
+              className="text-xs tracking-widest uppercase bg-slate-900 text-amber-100 px-5 py-1.5 hover:bg-slate-800 transition-colors"
             >
               ＋ 追加
             </button>
@@ -116,11 +116,11 @@ export default function HomePage() {
 
         {/* Cards */}
         {loading ? (
-          <div className="text-center text-stone-400 py-20 text-sm">読み込み中...</div>
+          <div className="text-center text-stone-400 py-24 text-sm tracking-wider">読み込み中...</div>
         ) : items.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-stone-500 text-sm mb-1">まだアイテムがありません</p>
-            <p className="text-stone-400 text-xs">「＋ 追加」からやりたいことを登録しよう！</p>
+          <div className="text-center py-24">
+            <p className="font-serif text-slate-400 text-base mb-2">— まだ何もありません —</p>
+            <p className="text-stone-400 text-xs tracking-wider">「＋ 追加」からやりたいことを登録しましょう</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

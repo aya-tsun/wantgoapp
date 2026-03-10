@@ -58,6 +58,9 @@ export default function LoginPage() {
             </p>
             <div className="flex-1 h-px bg-amber-400/50" />
           </div>
+          <p className="text-stone-400 text-xs mt-3 leading-relaxed">
+            行きたい場所を記録して計画実行までサポートするアプリです
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

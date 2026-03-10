@@ -15,6 +15,7 @@ create table if not exists public.items (
   ticket_status  text,
   url            text,
   memo           text,
+  tags           text[] not null default '{}',
   created_at     timestamptz not null default now(),
   updated_at     timestamptz not null default now()
 );
@@ -64,3 +65,9 @@ create index if not exists items_user_id_idx on public.items(user_id);
 create index if not exists items_deadline_idx on public.items(deadline);
 create index if not exists items_category_idx on public.items(category);
 create index if not exists items_status_idx on public.items(status);
+create index if not exists items_tags_idx on public.items using gin(tags);
+
+-- ============================================================
+-- Migration: add tags column (run if table already exists)
+-- ============================================================
+-- alter table public.items add column if not exists tags text[] not null default '{}';

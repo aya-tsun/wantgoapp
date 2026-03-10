@@ -12,6 +12,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true)
   const [filterCategory, setFilterCategory] = useState('')
   const [filterStatus, setFilterStatus] = useState('')
+  const [filterTag, setFilterTag] = useState('')
   const [sortByDeadline, setSortByDeadline] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [editingItem, setEditingItem] = useState(null)
@@ -35,6 +36,11 @@ export default function HomePage() {
     if (!error) setItems(data ?? [])
     setLoading(false)
   }, [user.id, filterCategory, filterStatus, sortByDeadline])
+
+  const allTags = [...new Set(items.flatMap((item) => item.tags ?? []))].sort()
+  const displayedItems = filterTag
+    ? items.filter((item) => item.tags?.includes(filterTag))
+    : items
 
   useEffect(() => {
     fetchItems()
@@ -112,19 +118,43 @@ export default function HomePage() {
               ＋ 追加
             </button>
           </div>
+
+          {allTags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-amber-100">
+              {allTags.map((tag) => (
+                <button
+                  key={tag}
+                  onClick={() => setFilterTag(filterTag === tag ? '' : tag)}
+                  className={`text-xs px-2 py-0.5 border transition-colors ${
+                    filterTag === tag
+                      ? 'bg-slate-900 text-amber-100 border-slate-900'
+                      : 'bg-slate-50 text-slate-600 border-slate-300 hover:border-slate-600'
+                  }`}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Cards */}
         {loading ? (
           <div className="text-center text-stone-400 py-24 text-sm tracking-wider">読み込み中...</div>
-        ) : items.length === 0 ? (
+        ) : displayedItems.length === 0 ? (
           <div className="text-center py-24">
-            <p className="font-serif text-slate-400 text-base mb-2">— まだ何もありません —</p>
-            <p className="text-stone-400 text-xs tracking-wider">「＋ 追加」からやりたいことを登録しましょう</p>
+            {filterTag ? (
+              <p className="font-serif text-slate-400 text-base mb-2">— 「{filterTag}」のアイテムはありません —</p>
+            ) : (
+              <>
+                <p className="font-serif text-slate-400 text-base mb-2">— まだ何もありません —</p>
+                <p className="text-stone-400 text-xs tracking-wider">「＋ 追加」からやりたいことを登録しましょう</p>
+              </>
+            )}
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {items.map((item) => (
+            {displayedItems.map((item) => (
               <ItemCard key={item.id} item={item} onEdit={handleEdit} />
             ))}
           </div>

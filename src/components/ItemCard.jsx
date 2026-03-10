@@ -92,6 +92,19 @@ export default function ItemCard({ item, onEdit }) {
           </div>
         )}
       </div>
+
+      {item.tags?.length > 0 && (
+        <div className="flex flex-wrap gap-1 mt-3 pt-3 border-t border-amber-100">
+          {item.tags.map((tag) => (
+            <span
+              key={tag}
+              className="text-xs bg-slate-100 text-slate-600 border border-slate-200 px-1.5 py-0.5"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

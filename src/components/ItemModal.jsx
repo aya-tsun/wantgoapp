@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import { CATEGORIES, STATUSES, TICKET_STATUSES } from '../lib/constants'
@@ -12,6 +12,7 @@ const EMPTY_FORM = {
   ticket_status: '',
   url: '',
   memo: '',
+  tags: [],
 }
 
 export default function ItemModal({ item, onClose, onSaved }) {
@@ -26,12 +27,42 @@ export default function ItemModal({ item, onClose, onSaved }) {
     ticket_status: item.ticket_status ?? '',
     url: item.url ?? '',
     memo: item.memo ?? '',
+    tags: item.tags ?? [],
   } : EMPTY_FORM)
+  const [tagInput, setTagInput] = useState('')
+  const tagInputRef = useRef(null)
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [error, setError] = useState('')
 
   const set = (field) => (e) => setForm((prev) => ({ ...prev, [field]: e.target.value }))
+
+  const addTag = (raw) => {
+    const tag = raw.trim().replace(/,+$/, '').trim()
+    if (!tag || form.tags.includes(tag)) return
+    setForm((prev) => ({ ...prev, tags: [...prev.tags, tag] }))
+  }
+
+  const handleTagKeyDown = (e) => {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault()
+      addTag(tagInput)
+      setTagInput('')
+    } else if (e.key === 'Backspace' && tagInput === '' && form.tags.length > 0) {
+      setForm((prev) => ({ ...prev, tags: prev.tags.slice(0, -1) }))
+    }
+  }
+
+  const handleTagBlur = () => {
+    if (tagInput.trim()) {
+      addTag(tagInput)
+      setTagInput('')
+    }
+  }
+
+  const removeTag = (tag) => {
+    setForm((prev) => ({ ...prev, tags: prev.tags.filter((t) => t !== tag) }))
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -49,6 +80,7 @@ export default function ItemModal({ item, onClose, onSaved }) {
       ticket_status: form.ticket_status || null,
       url: form.url || null,
       memo: form.memo || null,
+      tags: form.tags,
       updated_at: new Date().toISOString(),
     }
 
@@ -185,6 +217,40 @@ export default function ItemModal({ item, onClose, onSaved }) {
               placeholder="自由記述..."
               className={inputClass + ' resize-none'}
             />
+          </div>
+
+          <div>
+            <label className={labelClass}>タグ</label>
+            <div
+              className="flex flex-wrap gap-1.5 min-h-[2.25rem] border-b border-amber-300 pb-1.5 pt-1 cursor-text"
+              onClick={() => tagInputRef.current?.focus()}
+            >
+              {form.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="inline-flex items-center gap-1 text-xs bg-slate-100 text-slate-700 border border-slate-300 px-2 py-0.5"
+                >
+                  {tag}
+                  <button
+                    type="button"
+                    onClick={(e) => { e.stopPropagation(); removeTag(tag) }}
+                    className="text-slate-400 hover:text-slate-700 leading-none"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+              <input
+                ref={tagInputRef}
+                type="text"
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+                onKeyDown={handleTagKeyDown}
+                onBlur={handleTagBlur}
+                placeholder={form.tags.length === 0 ? 'タグを追加 (Enter か , で確定)' : ''}
+                className="flex-1 min-w-[8rem] bg-transparent text-sm text-slate-900 placeholder-stone-400 focus:outline-none"
+              />
+            </div>
           </div>
 
           {error && <p className="text-red-500 text-xs">{error}</p>}

@@ -113,7 +113,7 @@ export default function HomePage() {
 
             <button
               onClick={handleAdd}
-              className="text-xs tracking-widest uppercase bg-slate-900 text-amber-100 px-5 py-1.5 hover:bg-slate-800 transition-colors"
+              className="text-sm font-bold tracking-widest uppercase bg-amber-400 text-slate-900 px-6 py-2 shadow-md hover:bg-amber-300 active:scale-95 transition-all"
             >
               ＋ 追加
             </button>

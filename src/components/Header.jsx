@@ -10,8 +10,7 @@ export default function Header() {
           envitour
         </span>
         <div className="flex items-center gap-5">
-          <span className="text-xs text-slate-500 hidden sm:block">{user?.email}</span>
-          <button
+<button
             onClick={signOut}
             className="text-xs text-slate-400 hover:text-amber-300 transition-colors tracking-wide"
           >

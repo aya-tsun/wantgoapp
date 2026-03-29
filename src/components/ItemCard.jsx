@@ -72,18 +72,16 @@ export default function ItemCard({ item, onEdit }) {
           </div>
         )}
         {item.url && (
-          <div className="flex items-center gap-1.5 overflow-hidden">
+          <a
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="flex items-center gap-1.5 overflow-hidden text-amber-700 hover:underline"
+          >
             <IconLink />
-            <a
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="text-amber-700 hover:underline truncate"
-            >
-              {item.url.replace(/^https?:\/\//, '').split('/')[0]}
-            </a>
-          </div>
+            <span className="truncate">{item.url.replace(/^https?:\/\//, '').split('/')[0]}</span>
+          </a>
         )}
         {item.memo && (
           <div className="flex items-start gap-1.5">

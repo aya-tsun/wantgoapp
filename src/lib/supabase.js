@@ -1,10 +1,18 @@
 import { createClient } from '@supabase/supabase-js'
 
-// 開発環境は Supabase に直接接続、本番は Cloudflare Pages Functions 経由でプロキシ
-// （Safari の ITP によるクロスサイトブロックを回避するため）
-const supabaseUrl = import.meta.env.DEV
-  ? import.meta.env.VITE_SUPABASE_URL
-  : `${location.origin}/api/supabase`
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Safari ITP 対策: 本番では Cloudflare Pages Functions 経由でプロキシ
+// createClient には本物の Supabase URL を渡し（URL バリデーション通過のため）、
+// カスタム fetch でリクエストをプロキシ経由にルーティングする
+const customFetch = import.meta.env.DEV
+  ? undefined
+  : (url, options) => {
+      const proxyUrl = String(url).replace(supabaseUrl, `${location.origin}/api/supabase`)
+      return fetch(proxyUrl, options)
+    }
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  global: { fetch: customFetch },
+})

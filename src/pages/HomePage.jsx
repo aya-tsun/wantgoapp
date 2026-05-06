@@ -14,6 +14,7 @@ export default function HomePage() {
   const [filterStatus, setFilterStatus] = useState('')
   const [filterTag, setFilterTag] = useState('')
   const [sortByDeadline, setSortByDeadline] = useState(false)
+  const [hideArchived, setHideArchived] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [editingItem, setEditingItem] = useState(null)
 
@@ -26,6 +27,7 @@ export default function HomePage() {
 
     if (filterCategory) query = query.eq('category', filterCategory)
     if (filterStatus) query = query.eq('status', filterStatus)
+    if (hideArchived) query = query.not('status', 'in', '("完了","見送り")')
     if (sortByDeadline) {
       query = query.order('deadline', { ascending: true, nullsFirst: false })
     } else {
@@ -35,7 +37,7 @@ export default function HomePage() {
     const { data, error } = await query
     if (!error) setItems(data ?? [])
     setLoading(false)
-  }, [user.id, filterCategory, filterStatus, sortByDeadline])
+  }, [user.id, filterCategory, filterStatus, sortByDeadline, hideArchived])
 
   const allTags = [...new Set(items.flatMap((item) => item.tags ?? []))].sort()
   const displayedItems = filterTag
@@ -107,6 +109,17 @@ export default function HomePage() {
               }`}
             >
               期限順
+            </button>
+
+            <button
+              onClick={() => setHideArchived((v) => !v)}
+              className={`text-xs tracking-wider px-3 py-1.5 border transition-colors ${
+                hideArchived
+                  ? 'bg-slate-900 text-amber-200 border-slate-900'
+                  : 'bg-transparent text-slate-600 border-amber-300 hover:border-slate-900 hover:text-slate-900'
+              }`}
+            >
+              進行中のみ
             </button>
 
             <div className="flex-1" />
